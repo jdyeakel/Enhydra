@@ -1,0 +1,17 @@
+{
+    "contents" : "#Simulated consumer code\n\n#Import prey data\nprey <- read.csv(\"Prey.csv\",header=TRUE)\n\n#Number of consumers\nN = 5\n\n#Time-steps\nt_term <- 100\n\n#Matrix for saving consumer C values\nc_m <- matrix(0,N,t_term)\n\n#Matrix for saving consumer N values\nn_m <- matrix(0,N,t_term)\n\n#Matrix cor saving consumer prey bouts\nd_m <- matrix(0,N,t_term)\n\n#Initial consumer isotope values\n",
+    "created" : 1426278646737.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "310682426",
+    "id" : "9EB9B92A",
+    "lastKnownWriteTime" : 1426278927,
+    "path" : "~/Dropbox/Enhydra/Tissue Project/consumer_sim.R",
+    "project_path" : "consumer_sim.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

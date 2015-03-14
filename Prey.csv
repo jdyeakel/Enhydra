@@ -1,13 +1,13 @@
-Prey,CM,CSD,NM,NSD,Common
-prey1,-15.5,1.0,11.4,0.7,Clams
-prey2,-17.5,0.9,9.2,0.5,California Mussels
-prey3,-15.6,0.7,11.7,0.6,Fat Inkeeper Worms
-prey4,-15.5,0.9,9.5,0.9,Abalone
-prey5,-14.3,0.9,10.6,0.7,Tegula Snails
-prey6,-15.4,0.9,13.8,0.8,Rock Crabs
-prey7,-16.0,0.5,14.6,0.4,Dungeness Crab
-prey8,-17.0,1.1,9.4,0.4,Purple Sea Urchin
-prey9,-15.8,0.8,10.2,0.5,Red Sea Urchin
-prey10,-13.3,1.1,11.6,0.8,Northern Kelp Crab
-prey11,-17.5,1.4,10.9,0.6,Sea Stars
-prey12,-16.2,1.0,10.1,0.4,Pacific Sand Crab
+Prey,Group,Biomass,CM,CSD,NM,NSD,Common
+prey1,soft,0.07206,-15.5,1,11.4,0.7,Clams
+prey2,kelp,0.01162,-17.5,0.9,9.2,0.5,California Mussels
+prey3,soft,0.06124,-15.6,0.7,11.7,0.6,Fat Inkeeper Worms
+prey4,crab,0.13189,-15.5,0.9,9.5,0.9,Abalone
+prey5,snail,0.001595,-14.3,0.9,10.6,0.7,Tegula Snails
+prey6,crab,0.20297,-15.4,0.9,13.8,0.8,Rock Crabs
+prey7,crab,0.49076,-16,0.5,14.6,0.4,Dungeness Crab
+prey8,kelp,0.01443,-17,1.1,9.4,0.4,Purple Sea Urchin
+prey9,kelp,0.02942,-15.8,0.8,10.2,0.5,Red Sea Urchin
+prey10,kelp,0.0513,-13.3,1.1,11.6,0.8,Northern Kelp Crab
+prey11,crab,0.102395,-17.5,1.4,10.9,0.6,Sea Stars
+prey12,crab,0.00481,-16.2,1,10.1,0.4,Pacific Sand Crab

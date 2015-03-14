@@ -1,5 +1,6 @@
 #Simulated consumer code
 library(ellipse)
+library(RColorBrewer)
 
 
 #Import prey data
@@ -8,13 +9,13 @@ nprey <- length(prey[,1])
 ellip_prey <- list(nprey); CI <- 0.95
 #build ellipses for prey
 for (i in 1:nprey) {
-  Sigma <- matrix(c(prey$CSD[i],0,0,prey$NSD[i]),2,2)
+  #Sigma <- matrix(c(prey$CSD[i],0,0,prey$NSD[i]),2,2)
   mu <- c(prey$CM[i],prey$NM[i])
-  ellip_prey[[i]] <- ellipse(Sigma,centre=mu,level=CI)
+  ellip_prey[[i]] <- ellipse(x=0,scale = c(prey$CSD[i],prey$NSD[i]),centre=mu,level=CI)
 }
 
 #Number of consumers
-N = 10
+N = 200
 
 #Body size of consumers (kg)
 bmass <- rep(20,N)
@@ -87,12 +88,16 @@ for (t in 1:(t_term-1)) {
   
 } #end t
 
+
+colors <- brewer.pal(9,"Set2")
+
 #Plot prey ellipses
-plot(ellip_prey[[1]],type="l",xlim=c(-22,-10),ylim=c(5,20),col="gray")
+plot(ellip_prey[[1]],type="l",xlim=c(-22,-10),ylim=c(6,18),col="gray")
 for (i in 2:nprey) {
   lines(ellip_prey[[i]],col="gray")
 }
 for (i in 1:N) {
 ind <- i
-points(c_m[ind,],n_m[ind,],pch=16,cex=0.25)
+points(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
+lines(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
 }

@@ -15,13 +15,13 @@ for (i in 1:nprey) {
 }
 
 #Number of consumers
-N = 200
+N = 20
 
 #Body size of consumers (kg)
 bmass <- rep(20,N)
 
 #Time-steps
-t_term <- 1000
+t_term <- 5000
 
 #Matrix for saving consumer C values
 c_m <- matrix(0,N,t_term)
@@ -66,6 +66,9 @@ for (t in 1:(t_term-1)) {
       next_prey <- s_prey[i]
     }
     
+    #Prey biomass
+    mp <- prey$Biomass[next_prey]
+    
     #Randomly draw prey isotope values from known mean and sd
     cp_mean <- prey$CM[next_prey]
     cp_sd <- prey$CSD[next_prey]
@@ -76,7 +79,7 @@ for (t in 1:(t_term-1)) {
     np <- rnorm(1,np_mean,np_sd)
     
     #weights for body size
-    f <- mb/(mb + 1)
+    f <- mb/(mb + mp)
     
     cb_next <- f*cb + (1-f)*cp
     nb_next <- f*nb + (1-f)*np
@@ -89,7 +92,7 @@ for (t in 1:(t_term-1)) {
 } #end t
 
 
-colors <- brewer.pal(9,"Set2")
+colors <- rep(brewer.pal(8,"Set2"),round(N/9)+1)
 
 #Plot prey ellipses
 plot(ellip_prey[[1]],type="l",xlim=c(-22,-10),ylim=c(6,18),col="gray")

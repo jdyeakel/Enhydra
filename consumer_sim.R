@@ -15,7 +15,7 @@ for (i in 1:nprey) {
 }
 
 #Number of consumers
-N = 20
+N = 10000
 
 #Body size of consumers (kg)
 bmass <- rep(20,N)
@@ -42,10 +42,12 @@ n_m[,1] <- n_init
 
 #0 indicates generalist; 1 indicates specialist
 #e_gen <- rep(1,N)
-e_gen <- rep(0.8,N)
+e_gen <- rep(1,N)
 
 #Which prey item does each consumer specialize on?
 s_prey <- sample(nprey,N,replace=TRUE)
+#cumulative distribution
+#plot(sapply(seq(1,12),function(x){length(which(s_prey<x))/length(s_prey)}))
 
 #Loop over time
 for (t in 1:(t_term-1)) {

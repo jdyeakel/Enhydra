@@ -41,7 +41,9 @@ c_m[,1] <- c_init
 n_m[,1] <- n_init
 
 #0 indicates generalist; 1 indicates specialist
-e_gen <- rep(1,N)
+#e_gen <- rep(1,N)
+e_gen <- rep(0.8,N)
+
 #Which prey item does each consumer specialize on?
 s_prey <- sample(nprey,N,replace=TRUE)
 
@@ -58,12 +60,18 @@ for (t in 1:(t_term-1)) {
     mb <- bmass[i]
     
     #Determine next prey item
-    if (e_gen[i] == 0) {
-      #If generalist, randomly select from all prey
-      next_prey <- sample(nprey,1,replace=TRUE)
-    } else {
+    
+    #With probability equal to e_gen[i], they will specialize
+    #With probability equal to 1-e_gen[i], they will draw from prey randomly
+    
+    #Draw random value
+    rdraw <- runif(1)
+    if (rdraw < e_gen[i]) {
       #If specialist, select it's preferred prey
       next_prey <- s_prey[i]
+    } else {
+      #If generalist, randomly select from all prey
+      next_prey <- sample(nprey,1,replace=TRUE)
     }
     
     #Prey biomass

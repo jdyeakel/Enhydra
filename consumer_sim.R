@@ -15,13 +15,13 @@ for (i in 1:nprey) {
 }
 
 #Number of consumers
-N = 10000
+N = 20
 
 #Body size of consumers (kg)
 bmass <- rep(20,N)
 
 #Time-steps
-t_term <- 5000
+t_term <- 10000
 
 #Matrix for saving consumer C values
 c_m <- matrix(0,N,t_term)
@@ -41,8 +41,8 @@ c_m[,1] <- c_init
 n_m[,1] <- n_init
 
 #0 indicates generalist; 1 indicates specialist
-#e_gen <- rep(1,N)
-e_gen <- rep(1,N)
+#theta <- rep(1,N)
+theta <- rep(0,N)
 
 #Which prey item does each consumer specialize on?
 s_prey <- sample(nprey,N,replace=TRUE)
@@ -68,7 +68,7 @@ for (t in 1:(t_term-1)) {
     
     #Draw random value
     rdraw <- runif(1)
-    if (rdraw < e_gen[i]) {
+    if (rdraw < theta[i]) {
       #If specialist, select it's preferred prey
       next_prey <- s_prey[i]
     } else {
@@ -77,7 +77,9 @@ for (t in 1:(t_term-1)) {
     }
     
     #Prey biomass
-    mp <- prey$Biomass[next_prey]
+    #set to one if each prey is to be equally weighted
+    #(assume 1 kg of each thing is eaten rather than at individual level)
+    mp <- 1 #prey$Biomass[next_prey]
     
     #Randomly draw prey isotope values from known mean and sd
     cp_mean <- prey$CM[next_prey]
@@ -102,7 +104,7 @@ for (t in 1:(t_term-1)) {
 } #end t
 
 
-colors <- rep(brewer.pal(8,"Set2"),round(N/9)+1)
+colors <- rep(brewer.pal(8,"Set1"),round(N/9)+1)
 
 #Plot prey ellipses
 plot(ellip_prey[[1]],type="l",xlim=c(-22,-10),ylim=c(6,18),col="gray")
@@ -114,3 +116,15 @@ ind <- i
 points(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
 lines(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
 }
+
+ind <- 4
+plot(c_m[ind,],pch=16,cex=0.25); lines(c_m[ind,])
+
+
+
+
+
+
+
+
+

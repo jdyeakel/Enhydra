@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in,footskip=0.25in]{geometry}
+
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+
+\renewcommand\refname{\vskip -1cm}
+
+%\renewcommand{\rmdefault}{phv} % Arial
+%\renewcommand{\sfdefault}{phv} % Arial
+\usepackage{setspace}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{wasysym}
+\usepackage{placeins}
+\usepackage{multirow}
+\usepackage[T1]{fontenc}
+\usepackage[super]{natbib}
+\usepackage{framed}
+\usepackage{caption}
+\usepackage{longtable}
+
+\begin{document}
+
+\title{Tissue isotope dynamics}
+
+\maketitle
+
+\section{Methods}
+We start by considering a set of prey items, each with its own range $\delta^{13}C$ and $\delta^{15}N$ values, which we (for now) assume are independent and normally distributed.
+We then consider a consumer that selects among these prey items and integrates the isotopic values of prey into its tissues.
+The integration of the isotopic values of a prey item is thus a weighted average of the consumer's isotopic values and the isotopic values of the prey, with respect to the different mass of each.
+
+For simplicity, we will assume that a single prey item is consumed over the course of a day.
+Even though prey individuals are of different sizes, we will assume that the biomass of consumed prey is the same over the course of each day (i.e. that the consumer is replacing the energy that it spends). 
+If $X_c$ is the isotopic value of the consumer, and $X_p$ is the isotopic value of a prey, then
+
+\begin{align}
+	X_c(t+1) &= \frac{M_b}{M_b + M_p}X_b(t) + \frac{M_c}{M_b + M_p}X_p(t) \\ \nonumber
+	&= fX_c(t) + (1-f)X_p(t)
+\end{align}
+
+\noindent where $f$ is the proportion of total biomass that is the consumer's body tissues at the end of the day (i.e. minus body mass spent via metabolism).
+The change over time is then
+
+\begin{align}
+\label{diffeq}
+	X_c(t+1) - X_b(t) &= fX_c(t) + (1-f)X_p(t) - X_c(t),~~\mbox{equivalent to} \\
+	\frac{\rm d}{\rm dt}X_c &= fX_c + (1-f)X_p - X_c
+\end{align}
+
+The above differential equation describes how the consumer's biomass changes as it incorporates the mass of some prey $p$.
+Note that - for now - we are assuming that the consumer is specializing on a single prey.
+Solving for Eq. \ref{diffeq} reveals a tissue incorporation decay curve $X_c = X_p + (X_0-X_p)\exp\{(f-1)t\}$, where a tissue starts with an isotope value $X_0$ and at the limit $t\rightarrow \infty $, we find that $X_c \rightarrow X_p$, which makes sense.
+
+This is the exciting part! So far, we have assumed that the prey isotope value is constant, though we know that prey isotope values have variability.
+We want to incorporate this idea that prey isotope values are variable, and then solve for the mean (expectation) and variability of the consumer as it eats its prey.
+Just a reminder: the consumer is still a specialist, consuming a single, but variable prey.
+
+So in this next section, we assume that $X_c \sim {\rm Norm}(\bar{x}_p,\sigma^2)$.
+Then, we have to rewrite Eq. \ref{diffeq} as a Stochastic Differential Equation, which is badass
+
+\begin{equation}
+	dX_c = fX_c{\rm dt} + (1-f)(\bar{x}_p{\rm dt} + \sigma{\rm dW}) - X_c{\rm dt}
+\end{equation}
+
+\noindent where everything is as before, except that we have this funky term to the right of $(1-f)$, which basically says that the prey isotope value varies over time (as different prey are consumed), and that this variability scales with $\sigma$, which is the standard deviation of the prey's isotope value, while ${\rm dW}$ is the increment of Brownian Motion.
+
+We can then solve for the expectation and variability of the consumer's isotope value (${\rm E}\{X_c\}$ and ${\rm Var}\{X_c\}$, respectively).
+We find that
+
+\begin{align}
+	{\rm E}\{X_c\} &= \bar{x}_p + (X_0-\bar{x}_p){\rm e}^{(f-1)t} \nonumber \\ \nonumber \\ 
+	{\rm Var}\{X_c\} &= \frac{\sigma^2(f-1)}{2}({\rm e}^{2(f-1)t} -1)
+\end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

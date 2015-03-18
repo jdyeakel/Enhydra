@@ -124,13 +124,13 @@ par(mfrow=c(2,1))
 
 #Analytical approximation for pure specialist, SD=0
 analyticE <- sapply(seq(1,t_term),function(x){f^x*(c_init - cp_mean) + cp_mean})
-plot(n_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
+plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
 lines(analyticE)
 
 binsize = 100
-analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*np_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
-sd_bin <- sapply(seq(2,t_term,by=binsize),function(x){sd(n_m[ind,x-1:x])})
-plot(seq(2,t_term,by=binsize),sd_bin,
+analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
+sd_bin <- sapply(seq(binsize+1,t_term,by=binsize),function(x){sd(c_m[ind,x-binsize:x])})
+plot(seq(binsize+1,t_term,by=binsize),sd_bin,
      pch=16,cex=0.5,ylim=c(0,0.5),xlab="time",ylab="d13C",col="gray")
 lines(analyticSD)
 

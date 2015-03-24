@@ -45,7 +45,7 @@ n_m[,1] <- n_init
 
 #0 indicates generalist; 1 indicates specialist
 #theta <- rep(1,N)
-theta <- rep(1,N)
+#theta <- rep(1,N)
 
 #Dirichlet distribution for p_vector
 #p_vector is the proportional contribution of prey to the diet of consumer
@@ -53,7 +53,7 @@ theta <- rep(1,N)
 #given the Dirichlet from which it is drawn
 Dir_param <- matrix(1,N,nprey)
 
-Dir_param[1,8] <- 20
+Dir_param[1,11] <- 10
 
 
 #Which prey item does each consumer specialize on?
@@ -150,13 +150,18 @@ for (i in 1:N) {
 
 #Dirichlet-Normal Approximation for expectation and variance
 a0 <- sum(Dir_param[1,1:nprey])
+
+#Expectation of the sum(p_i*X_i) quantity
 EDir_c <- (Dir_param[1,1:nprey]/a0) %*% prey$CM
 EDir_n <- (Dir_param[1,1:nprey]/a0) %*% prey$NM
 
+#Expectation of p_i
 Ep <- Dir_param[1,1:nprey]/a0
 
+#Variance of p_i
 VarDir_p <- sapply(Dir_param,function(x){(x*(a0-x)) / (a0^2*(a0+1))})
 
+#Covariance of p_i,p_j
 CovDir_p <- matrix(0,nprey,nprey)
 for (i in 1:nprey) {
   for (j in 1:nprey) {
@@ -165,13 +170,14 @@ for (i in 1:nprey) {
 } 
 diag(CovDir_p) <- 0
 
+#Variance of the sum(p_i*X_i) quantity for CARBON
 VarDir_c_vec <- numeric(nprey)
 for (i in 1:nprey) {
   VarDir_c_vec[i] <- (prey$CSD[i]^2)*VarDir_p[i] + Ep[i]^2*(prey$CSD[i])^2  #+ VarDir_p[i]*prey$CM[i]^2 + prey$CM[i]*sum(CovDir_p[i,-i] * prey$CM[-i])       
 }
 VarDir_c <- sum(VarDir_c_vec)
 
-
+#Variance of the sum(p_i*X_i) quantity for NITROGEN
 VarDir_n_vec <- numeric(nprey)
 for (i in 1:nprey) {
   VarDir_n_vec[i] <- (prey$NSD[i]^2)*VarDir_p[i] + Ep[i]^2 * prey$NSD[i]^2  #+ VarDir_p[i]*prey$NM[i]^2 + prey$NM[i]*sum(CovDir_p[i,-i] * prey$NM[-i])       
@@ -188,11 +194,12 @@ VarDir_n <- sum(VarDir_n_vec)
 # plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
 # lines(analyticE)
 
+#Plotting observed and expected values for the expectation CARBON
 analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
 plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
 lines(analyticEDir)
 
-
+#Plotting observed and expected values for the variance CARBON
 binsize = 1000
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
@@ -216,14 +223,15 @@ lines(analyticDirSD_c)
 # par(mfrow=c(2,1))
 # analyticE <- sapply(seq(1,t_term),function(x){f^x*(n_init - np_mean) + np_mean})
 # plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
-# lines(analyticE)
+# lines(analyticE)  
 
+#Plotting observed and expected values for the variance NITROGEN
 analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(n_init - EDir_n) + EDir_n})
 plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
 lines(analyticEDir)
 
-
-binsize = 1000
+#Plotting observed and expected values for the variance NITROGEN
+binsize = 200
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*np_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)

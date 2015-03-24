@@ -53,7 +53,7 @@ n_m[,1] <- n_init
 #given the Dirichlet from which it is drawn
 Dir_param <- matrix(1,N,nprey)
 
-Dir_param[1,11] <- 10
+Dir_param[1,4:5] <- 10
 
 
 #Which prey item does each consumer specialize on?
@@ -165,7 +165,7 @@ VarDir_p <- sapply(Dir_param,function(x){(x*(a0-x)) / (a0^2*(a0+1))})
 CovDir_p <- matrix(0,nprey,nprey)
 for (i in 1:nprey) {
   for (j in 1:nprey) {
-    CovDir_p[i,j] <- -(Dir_param[i]*Dir_param[j] / a0^2*(a0 + 1))
+    CovDir_p[i,j] <- -(Dir_param[i]*Dir_param[j]) / (a0^2*(a0 + 1))
   }
 } 
 diag(CovDir_p) <- 0
@@ -173,14 +173,14 @@ diag(CovDir_p) <- 0
 #Variance of the sum(p_i*X_i) quantity for CARBON
 VarDir_c_vec <- numeric(nprey)
 for (i in 1:nprey) {
-  VarDir_c_vec[i] <- (prey$CSD[i]^2)*VarDir_p[i] + Ep[i]^2*(prey$CSD[i])^2  #+ VarDir_p[i]*prey$CM[i]^2 + prey$CM[i]*sum(CovDir_p[i,-i] * prey$CM[-i])       
+  VarDir_c_vec[i] <- (prey$CSD[i]^2)*VarDir_p[i] + Ep[i]^2*(prey$CSD[i])^2  + VarDir_p[i]*prey$CM[i]^2 + prey$CM[i]*sum(CovDir_p[i,-i] * prey$CM[-i])       
 }
 VarDir_c <- sum(VarDir_c_vec)
 
 #Variance of the sum(p_i*X_i) quantity for NITROGEN
 VarDir_n_vec <- numeric(nprey)
 for (i in 1:nprey) {
-  VarDir_n_vec[i] <- (prey$NSD[i]^2)*VarDir_p[i] + Ep[i]^2 * prey$NSD[i]^2  #+ VarDir_p[i]*prey$NM[i]^2 + prey$NM[i]*sum(CovDir_p[i,-i] * prey$NM[-i])       
+  VarDir_n_vec[i] <- (prey$NSD[i]^2)*VarDir_p[i] + Ep[i]^2 * prey$NSD[i]^2  + VarDir_p[i]*prey$NM[i]^2 + prey$NM[i]*sum(CovDir_p[i,-i] * prey$NM[-i])       
 }
 VarDir_n <- sum(VarDir_n_vec)
 
@@ -231,7 +231,7 @@ plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
 lines(analyticEDir)
 
 #Plotting observed and expected values for the variance NITROGEN
-binsize = 200
+binsize = 1000
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*np_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)

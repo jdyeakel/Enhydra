@@ -51,9 +51,10 @@ theta <- rep(1,N)
 #p_vector is the proportional contribution of prey to the diet of consumer
 #p_vector determines a per-diem vector of proportional contributions
 #given the Dirichlet from which it is drawn
-Dir_param <- matrix(1,N,nprey-1)
+Dir_param <- matrix(1,N,nprey)
 
-Dir_param[1,5:6] <- 100
+Dir_param[1,8] <- 20
+
 
 #Which prey item does each consumer specialize on?
 s_prey <- sample(nprey,N,replace=TRUE)
@@ -102,9 +103,9 @@ for (t in 1:(t_term-1)) {
     #if (N == 1) {
     #  p_vec[1:nprey-1] <- rdirichlet(1,Dir_param)
     #} else {
-    p_vec[1:nprey-1] <- rdirichlet(1,Dir_param[i,])
+    p_vec[1:nprey] <- rdirichlet(1,Dir_param[i,])
     #}
-    p_vec[nprey] <- 1 - sum(p_vec)
+    #p_vec[nprey] <- 1 - sum(p_vec)
     #Draw prey values from each prey
     cp_vec <- sapply(seq(1,nprey),function(x){rnorm(1,prey$CM[x],prey$CSD[x])})
     np_vec <- sapply(seq(1,nprey),function(x){rnorm(1,prey$NM[x],prey$NSD[x])})
@@ -139,24 +140,62 @@ for (i in 2:nprey) {
   lines(ellip_prey[[i]],col="gray")
 }
 for (i in 1:N) {
-ind <- i
-points(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
-lines(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
+  ind <- i
+  points(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
+  lines(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
 }
 
-ind <- 1
-plot(c_m[ind,],pch=16,cex=0.25) #; lines(c_m[ind,])
+#ind <- 1
+#plot(c_m[ind,],pch=16,cex=0.25) #; lines(c_m[ind,])
+
+#Dirichlet-Normal Approximation for expectation and variance
+a0 <- sum(Dir_param[1,1:nprey])
+EDir_c <- (Dir_param[1,1:nprey]/a0) %*% prey$CM
+EDir_n <- (Dir_param[1,1:nprey]/a0) %*% prey$NM
+
+Ep <- Dir_param[1,1:nprey]/a0
+
+VarDir_p <- sapply(Dir_param,function(x){(x*(a0-x)) / (a0^2*(a0+1))})
+
+CovDir_p <- matrix(0,nprey,nprey)
+for (i in 1:nprey) {
+  for (j in 1:nprey) {
+    CovDir_p[i,j] <- -(Dir_param[i]*Dir_param[j] / a0^2*(a0 + 1))
+  }
+} 
+diag(CovDir_p) <- 0
+
+VarDir_c_vec <- numeric(nprey)
+for (i in 1:nprey) {
+  VarDir_c_vec[i] <- (prey$CSD[i]^2)*VarDir_p[i] + Ep[i]^2*(prey$CSD[i])^2  #+ VarDir_p[i]*prey$CM[i]^2 + prey$CM[i]*sum(CovDir_p[i,-i] * prey$CM[-i])       
+}
+VarDir_c <- sum(VarDir_c_vec)
+
+
+VarDir_n_vec <- numeric(nprey)
+for (i in 1:nprey) {
+  VarDir_n_vec[i] <- (prey$NSD[i]^2)*VarDir_p[i] + Ep[i]^2 * prey$NSD[i]^2  #+ VarDir_p[i]*prey$NM[i]^2 + prey$NM[i]*sum(CovDir_p[i,-i] * prey$NM[-i])       
+}
+VarDir_n <- sum(VarDir_n_vec)
+
 
 
 #CARBON
 #Analytical approximation for pure specialist, SD=0
-par(mfrow=c(2,1))
-analyticE <- sapply(seq(1,t_term),function(x){f^x*(c_init - cp_mean) + cp_mean})
-plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
-lines(analyticE)
 
-binsize = 200
-analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
+# par(mfrow=c(2,1))
+# analyticE <- sapply(seq(1,t_term),function(x){f^x*(c_init - cp_mean) + cp_mean})
+# plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
+# lines(analyticE)
+
+analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
+plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
+lines(analyticEDir)
+
+
+binsize = 1000
+#analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
+analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)
 sd_bin <- numeric(length(bins)-1)
 for (i in 1:(length(bins)-1)) {
@@ -168,18 +207,25 @@ for (i in 1:(length(bins)-1)) {
 #I don't know why ^ doesn't work!
 plot(bins[-1],sd_bin,
      pch=16,cex=0.5,xlim=c(0,tail(bins,n=1)),ylim=c(0,0.5),xlab="time",ylab="d13C SD",col="black")
-lines(analyticSD)
+lines(analyticDirSD_c)
+#lines(analyticSD)
 
 
 #NITROGEN
 #Analytical approximation for pure specialist, SD=0
-par(mfrow=c(2,1))
-analyticE <- sapply(seq(1,t_term),function(x){f^x*(n_init - np_mean) + np_mean})
-plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
-lines(analyticE)
+# par(mfrow=c(2,1))
+# analyticE <- sapply(seq(1,t_term),function(x){f^x*(n_init - np_mean) + np_mean})
+# plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
+# lines(analyticE)
 
-binsize = 200
-analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*np_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
+analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(n_init - EDir_n) + EDir_n})
+plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
+lines(analyticEDir)
+
+
+binsize = 1000
+#analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*np_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
+analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)
 sd_bin <- numeric(length(bins)-1)
 for (i in 1:(length(bins)-1)) {
@@ -191,5 +237,5 @@ for (i in 1:(length(bins)-1)) {
 #I don't know why ^ doesn't work!
 plot(bins[-1],sd_bin,
      pch=16,cex=0.5,xlim=c(0,tail(bins,n=1)),ylim=c(0,0.5),xlab="time",ylab="d15N SD",col="black")
-lines(analyticSD)
+lines(analyticDirSD_n)
 

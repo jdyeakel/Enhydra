@@ -53,7 +53,7 @@ n_m[,1] <- n_init
 #given the Dirichlet from which it is drawn
 Dir_param <- matrix(1,N,nprey)
 
-Dir_param[1,4:5] <- 10
+Dir_param[1,6] <- 100
 
 
 #Which prey item does each consumer specialize on?
@@ -231,7 +231,7 @@ plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
 lines(analyticEDir)
 
 #Plotting observed and expected values for the variance NITROGEN
-binsize = 1000
+binsize = 500
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*np_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)
@@ -246,4 +246,52 @@ for (i in 1:(length(bins)-1)) {
 plot(bins[-1],sd_bin,
      pch=16,cex=0.5,xlim=c(0,tail(bins,n=1)),ylim=c(0,0.5),xlab="time",ylab="d15N SD",col="black")
 lines(analyticDirSD_n)
+
+
+#Exploring the population-level parameter range
+#specialization measure
+epsilon <- seq(0,1,length.out=10)
+avec <- matrix(0,10,nprey)
+generalist <- rep(1,nprey)
+specialist <- generalist; specialist[1] <- 100
+
+#Vary from generalist to a specialist
+for (i in 1:10) {
+  avec[i,] <- epsilon[i]*generalist + (1-epsilon[i])*specialist
+}
+
+
+sim_matrix <- matrix(1,N,N)
+diff_matrix <- matrix(0,N,N); diag(diff_matrix) <- 1
+#similarity measure
+psi <- seq(0,1,length.out=10)
+
+sim_list <- list()
+for (i in 1:length(psi)) {
+  sim_list[[i]] <- psi[i]*sim_matrix + (1-psi[i])*diff_matrix
+}
+
+a_matrix <- matrix(0,N,nprey)
+
+#For first individual, given value of epsilon, randomly sample alpha vector
+#for second individual, given value of epsilon, and similarity between ind2 and ind1, randomly sample alpha vector
+#for third individual, given value of epsilon, and similarity between ind3 and [ind1, ind2], randomly sample alpha vector
+#Do this through N individuals
+#Calculate Pop-Level Variance for each [epsilon, phi]
+
+#Do this L times, and determine E[Pop-Level Variance] over L
+
+#Plot
+
+for (i in 1:length(epsilon)) {
+  for (j in 1:length(psi)) {
+    
+    
+    
+    
+  }
+}
+
+
+
 

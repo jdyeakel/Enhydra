@@ -53,7 +53,7 @@ n_m[,1] <- n_init
 #given the Dirichlet from which it is drawn
 Dir_param <- matrix(1,N,nprey)
 
-Dir_param[1,6] <- 100
+Dir_param[1,6:8] <- 10
 
 
 #Which prey item does each consumer specialize on?
@@ -71,7 +71,7 @@ for (t in 1:(t_term-1)) {
     nb <- n_m[i,t]
     
     #Define body mass of consumer
-    mb <- bmass[i]
+    #mb <- bmass[i]
     
     #Determine next prey item
     
@@ -116,11 +116,15 @@ for (t in 1:(t_term-1)) {
     #Prey biomass
     #set to one if each prey is to be equally weighted
     #(assume 1 kg of each thing is eaten rather than at individual level)
-    mp <- 1 #prey$Biomass[next_prey]
+    #mp <- 1 #prey$Biomass[next_prey]
+    
+    #Define incorporation rate
+    incorp_rate <- 0.005
 
     #weights for body size
-    f <- mb/(mb + mp)
-    
+    #f <- mb/(mb + mp)
+    f <- 1 - incorp_rate
+
     cb_next <- f*cb + (1-f)*cp
     nb_next <- f*nb + (1-f)*np
     
@@ -133,7 +137,6 @@ for (t in 1:(t_term-1)) {
 
 
 colors <- rep(brewer.pal(8,"Set1"),round(N/9)+1)
-
 #Plot prey ellipses
 plot(ellip_prey[[1]],type="l",xlim=c(-22,-10),ylim=c(6,18),col="gray",xlab="d13C",ylab="d15N")
 for (i in 2:nprey) {
@@ -189,12 +192,13 @@ VarDir_n <- sum(VarDir_n_vec)
 #CARBON
 #Analytical approximation for pure specialist, SD=0
 
-# par(mfrow=c(2,1))
+par(mfrow=c(2,1))
 # analyticE <- sapply(seq(1,t_term),function(x){f^x*(c_init - cp_mean) + cp_mean})
 # plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
 # lines(analyticE)
 
 #Plotting observed and expected values for the expectation CARBON
+ind <- 1
 analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
 plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
 lines(analyticEDir)
@@ -250,25 +254,26 @@ lines(analyticDirSD_n)
 
 #Exploring the population-level parameter range
 #specialization measure
-epsilon <- seq(0,1,length.out=10)
+
+epsilon_v <- seq(0,1,length.out=10)
 avec <- matrix(0,10,nprey)
-generalist <- rep(1,nprey)
-specialist <- generalist; specialist[1] <- 100
+generalist <- rep(1/nprey,nprey)
+specialist <- numeric(nprey); specialist[1] <- 1
 
 #Vary from generalist to a specialist
 for (i in 1:10) {
-  avec[i,] <- epsilon[i]*generalist + (1-epsilon[i])*specialist
+  avec[i,] <- epsilon_v[i]*generalist + (1-epsilon_v[i])*specialist
 }
 
 
 sim_matrix <- matrix(1,N,N)
 diff_matrix <- matrix(0,N,N); diag(diff_matrix) <- 1
 #similarity measure
-psi <- seq(0,1,length.out=10)
+psi_v <- seq(0,1,length.out=10)
 
 sim_list <- list()
 for (i in 1:length(psi)) {
-  sim_list[[i]] <- psi[i]*sim_matrix + (1-psi[i])*diff_matrix
+  sim_list[[i]] <- psi_v[i]*sim_matrix + (1-psi_v[i])*diff_matrix
 }
 
 a_matrix <- matrix(0,N,nprey)
@@ -285,12 +290,54 @@ a_matrix <- matrix(0,N,nprey)
 
 for (i in 1:length(epsilon)) {
   for (j in 1:length(psi)) {
+    eps <- epsilon_v[i]
+    psi <- psi_v[j]
+    
     
     
     
     
   }
 }
+
+#Or just sample the shit out of the parameter space
+L <- 10000
+Epsi <- numeric(L)
+Eepsilon <- numeric(L)
+gen_vec <- rep(1/nprey,nprey)
+spec_vec <- numeric(nprey); spec_vec[1] <- 1
+
+for (l in 1:L) {
+  #Build population p matrix
+  #p_m <- matrix(runif(N*nprey),N,nprey)
+  p_m <- matrix(rgamma(N*nprey,runif(1,1,10),runif(1,1,10)),N,nprey)
+  p_m <- p_m/apply(p_m,1,sum) #ensures rows sum to 1
+  
+  #Build similarity matrix
+  S_m <- matrix(0,N,N)
+  for (i in 1:N) {
+    for (j in 1:N) {
+      v1 <- p_m[i,]
+      v2 <- p_m[j,]
+      mag1 <- sqrt(v1 %*% v1)
+      mag2 <- sqrt(v2 %*% v2)
+      S_m[i,j] <- (v1/mag1) %*% (v2/mag2)
+    }
+  }
+  
+  #Calculate <epsilon> and psi
+  psi <- diag(ginv(sim_matrix - diff_matrix) %*% (S_m - diff_matrix))
+  Epsi[l] <- 1 - mean(psi)
+  
+  M <- as.matrix(cbind(gen_vec,spec_vec))
+  Minv <- ginv(M)
+  Eepsilon[l] <- min(mean(apply(p_m,1,function(x){Minv %*% x})[1,]),1)
+}
+
+plot(Epsi,Eepsilon,xlim=c(0,1),ylim=c(0,1))
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  24 MAR 2015 14:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  26 MAR 2015 14:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -214,6 +214,9 @@ Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
 
 LaTeX Warning: Label `fig_time' multiply defined.
 
+
+LaTeX Warning: Label `fig_time' multiply defined.
+
 )
 \openout1 = `Tissue_methods.aux'.
 
@@ -337,51 +340,56 @@ LaTeX Warning: No \author given.
 
 [1
 
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] <fig_bivariate.png, id=16, 680.5425pt x 631.35875pt>
+{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] <fig_bivariate.png, id=29, 680.5425pt x 631.35875pt>
 File: fig_bivariate.png Graphic file (type png)
  <use fig_bivariate.png>
-Package pdftex.def Info: fig_bivariate.png used on input line 114.
+Package pdftex.def Info: fig_bivariate.png used on input line 222.
 (pdftex.def)             Requested size: 234.8775pt x 217.89607pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<fig_d13CvsTime.png, id=18, 678.535pt x 829.0975pt>
+ <fig_d13CvsTime.png, id=31, 678.535pt x 829.0975pt>
 File: fig_d13CvsTime.png Graphic file (type png)
  <use fig_d13CvsTime.png>
-Package pdftex.def Info: fig_d13CvsTime.png used on input line 123.
+Package pdftex.def Info: fig_d13CvsTime.png used on input line 231.
 (pdftex.def)             Requested size: 234.8775pt x 286.98778pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<fig_d15NvsTime.png, id=19, 678.535pt x 829.0975pt>
-File: fig_d15NvsTime.png Graphic file (type png)
- <use fig_d15NvsTime.png>
-Package pdftex.def Info: fig_d15NvsTime.png used on input line 133.
-(pdftex.def)             Requested size: 234.8775pt x 286.98778pt.
+<fig_d13CvsTime_gen.png, id=32, 877.2775pt x 778.91pt>
+File: fig_d13CvsTime_gen.png Graphic file (type png)
+ <use fig_d13CvsTime_gen.png>
+Package pdftex.def Info: fig_d13CvsTime_gen.png used on input line 241.
+(pdftex.def)             Requested size: 234.8775pt x 208.53761pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[2] [3 <./fig_bivariate.png> <./fig_d13CvsTime.png>] [4 <./fig_d15NvsTime.png>] (/Users/justinyeakel/Dropbox/Enhydra/Tissue Project/Manuscript/.texpadtmp/Tissue_methods.aux)
+<fig_fvsSigma.pdf, id=33, 315.1775pt x 212.795pt>
+File: fig_fvsSigma.pdf Graphic file (type pdf)
+ <use fig_fvsSigma.pdf>
+Package pdftex.def Info: fig_fvsSigma.pdf used on input line 251.
+(pdftex.def)             Requested size: 234.8775pt x 158.57953pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5 <./fig_bivariate.png>] [6 <./fig_d13CvsTime.png> <./fig_d13CvsTime_gen.png>] [7 <./fig_fvsSigma.pdf>] (/Users/justinyeakel/Dropbox/Enhydra/Tissue Project/Manuscript/.texpadtmp/Tissue_methods.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 5033 strings out of 493117
- 71672 string characters out of 6135433
- 142998 words of memory out of 5000000
- 8379 multiletter control sequences out of 15000+600000
+ 5038 strings out of 493117
+ 71791 string characters out of 6135433
+ 141998 words of memory out of 5000000
+ 8383 multiletter control sequences out of 15000+600000
  20439 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,9n,38p,497b,286s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
-Output written on "/Users/justinyeakel/Dropbox/Enhydra/Tissue Project/Manuscript/.texpadtmp/Tissue_methods.pdf" (4 pages, 293978 bytes).
+ 38i,10n,38p,583b,286s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
+Output written on "/Users/justinyeakel/Dropbox/Enhydra/Tissue Project/Manuscript/.texpadtmp/Tissue_methods.pdf" (7 pages, 424372 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 48 compressed objects within 1 object stream
+ 127 PDF objects out of 1000 (max. 8388607)
+ 86 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

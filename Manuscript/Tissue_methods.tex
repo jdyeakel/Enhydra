@@ -79,8 +79,8 @@ We can then solve for the expectation and variability of the consumer's isotope 
 We find that
 
 \begin{align}
-	{\rm E}\{X_c\} &= \bar{x}_p + (X_0-\bar{x}_p){\rm e}^{(f-1)t} \nonumber \\ \nonumber \\ 
-	{\rm Var}\{X_c\} &= \frac{\sigma^2(f-1)}{2}({\rm e}^{2(f-1)t} -1).
+	{\rm E}\{X_c(t)\} &= \bar{x}_p + (X_0-\bar{x}_p){\rm e}^{-(1-f)t}, \nonumber \\ \nonumber \\ 
+	{\rm Var}\{X_c(t)\} &= \frac{\sigma^2(f-1)}{2}({\rm e}^{-2(1-f)t} -1).
 \end{align}
 
 \noindent As before, in the limit of $t \rightarrow \infty$, ${\rm E}\{X_c\} \rightarrow \bar{x}_p$, such that the specialist consumer will be centered around its prey.
@@ -90,8 +90,116 @@ The degree to which the consumer's variance is less than the prey's variance is 
 
 \subsection{Isotopic dynamics of a prey-switching consumer}
 
+Now let's consider the case of a consumer that can incorporate multiple prey into its diet over the course of each day.
+The primary change is that -- rather than sampling from a single prey isotopic distribution, and incorporating this sample into the consumer's mass -- we are sampling from multiple prey isotopic distributions.
+We also want to retain enough flexibility in the design so that we can simulate on one end a specialist consumer (as before), and on the other end a generalist consumer, as well as everything in between.
 
-{\bf Injecting more reality} 
+To do this, we can assume that within each time step, the consumer incorporates a certain proportion of each prey, so that it is integrating $Z = \sum_{i=1}^Np_iX_i$, where $p_i$ is the proportional contribution of the isotope value $X$ for prey $i$, summed over the $N$ available prey.
+As before, we assume that $X_i$ is normally distributed ($X_i \sim {\rm Norm}[\bar{x}_i, \sigma_i^2]$), and that each prey's distribution is independent of the others.
+We also want to assume that $p_i$ is a random variable, such that an individuals behavior can change over time.
+Because $\sum_{i=1}^N p_i = 1$, these variables are not independent.
+
+The random proportional contribution vector $p$ (of which $p_i$ is a single element, such that the vector sums to one) is distributed as a Dirichlet Distribution, which is an $N$-dimensional distribution where the individual elements can range from 0 to 1.
+The Dirichlet distribution is paramaterized by the vector $\bm a$, where each element has a value greater than one.
+If all $a_i = 1$, the distribution is flat.
+If all $a_i = 1$, except for one element, which has an arbitrarily high number, the proportional contribution of that prey item will be large, whereas the rest will be low.
+As such, the mean proportional contribution of each prey item, as given by a particular Dirichlet distribution is
+
+\begin{equation}
+	{\rm E}\{p_i\} = \frac{a_i}{a_0}.
+\end{equation}
+
+\noindent where $a_0 = \sum_{i=1}^N a_i$.
+The variance of the proportional contribution of each prey item is then
+
+\begin{equation}
+	{\rm Var}\{p_i\} = \frac{a_i(a_0 - a_i)}{a_0^2(a_0 + 1)}.
+\end{equation}
+
+This is where things get tricky.
+Because the isotopic values that the consumer is integrating is now $Z = \sum_{i=1}^Np_iX_i$, where both $p_i$ and $X_i$ are random variables, we need to estimate the mean and variance of $Z$ so that we can integrate this into the stochastic differential equation framework.
+When we put it all together, the stochastic differential equation is
+
+\begin{equation}
+{\rm d}X_c = (f-1)X_c{\rm dt} + (1-f)\left({\rm E}\{Z\} {\rm dt} + \sqrt{{\rm Var}\{Z\}}{\rm dW}\right).
+\end{equation}
+
+There is some funny business about stochastic differential equations that we don't need to get into: because the timesteps are infinitely small, the variance of Brownian motion is infinitely large.
+The important point is that no matter what distribution you are sampling from, because of the central limit theorem, $X_c$ will be normally distributed at the long time limit.
+So assuming $Z \sim {\rm Norm}\{{\rm E}\{Z\}, \sqrt{{\rm Var}\{Z\}}\}$ is correct.
+So now we want to find ${\rm E}\{Z\}$ and ${\rm Var}\{Z\}$.
+After much pain, we find
+
+\begin{equation}
+	{\rm E}\{Z\} = \sum_{i=1}^N \bar{p}_i \bar{x}_i	
+\end{equation}
+
+\noindent where $\bar{p}_i$ and $\bar{x}_i$ are the means of each, respectively.
+Moreover (and this was the painful part),
+
+\begin{equation}
+	{\rm Var}\{Z\} = \sum_{i=1}^N {\rm Var}\{p_i\}{\rm Var}\{X_i\} + \bar{p}_i^2{\rm Var}\{X_i\} \bar{x}_i^2 {\rm Var}\{p_i\} + \sum_{\substack{
+	j=1 \\
+	j \neq i}							
+	}^N {\rm Cov}\{p_ip_j)\bar{x}_i\bar{x}_j,
+\end{equation}
+
+\noindent where 
+
+\begin{equation}
+	{\rm Cov}\{p_i,p_j\} = \frac{-a_ia_j}{a_0^2(a_0 + 1)}.
+\end{equation}
+
+Now we have an explicit formulation for the means and variances of $Z$, and to get back at estimating the expectation and variance for $X_c$ (the goal in all of this), we can plug these values back into the original solution for the specialist case, such that
+
+\begin{align}
+	{\rm E}\{X_c(t)\} &= \sum_{i=1}^N \bar{p}_i \bar{x}_i + \left(X_0-\sum_{i=1}^N \bar{p}_i \bar{x}_i\right){\rm e}^{-(1-f)t}, \nonumber \\ \nonumber \\ 
+	{\rm Var}\{X_c(t)\} &= \frac{{\rm Var}\{Z\}(f-1)}{2}\left({\rm e}^{-2(1-f)t} -1\right).
+\end{align}
+
+\noindent as $t\rightarrow \infty$, we find that 
+
+\begin{align}
+	{\rm E}\{X_c(t\rightarrow \infty)\} &= \sum_{i=1}^N \bar{p}_i \bar{x}_i, \nonumber \\ \nonumber \\ 
+	{\rm Var}\{X_c(t\rightarrow \infty)\} &= \frac{{\rm Var}\{Z\}(1-f)}{2}.
+\end{align}
+
+{\bf Initial insights}
+
+\begin{enumerate}
+\item The asymptote in variance occurs quickly (at rate $(1-f)$ for the expectation, and at rate $2(1-f)$ for the variance)
+\item The variance of a consumer is a fixed amount less than the variance of its component prey
+\item The amount that variance is lowered in the consumer is a function of the incorporation rate $(1-f)$ 
+\item All we need to solve all of this is means and stdevs of the prey + the Dirichlet parameter set for the consumer (which describes its prey-preferences)
+\end{enumerate}
+
+
+\subsection{The equations for a population (beta)}
+So far, we have just calculated properties for a single consumer, but we really care about a population of consumers.
+Such a population can vary in a number of cool ways... it could be composed entirely of generalist consumers, it could have specialist consumers that all eat the same thing, it could have specialist consumers that all eat different things, or anything in between.
+
+Because we have analytical expressions for the individual-level moments of the isotopic distributions, we now want to scale up.
+Because each individual consumer has normally distributed isotope values, the population is a mixture distribution of multiple normals.
+If there are $M$ consumers in the population, the expectation for the population is simple, and is just
+
+\begin{equation}
+{\rm E}\{X_{\rm pop}\} = \frac{1}{M}\sum_{k=1}^M \bar{x}_c^{(k)},
+\end{equation}
+
+\noindent where $\bar{x}_c^{(k)}$ is the expectation for the kth consumer.
+The variance is a little tricker (as always), and is
+
+\begin{equation}
+{\rm Var}\{X_{\rm pop}\} = \frac{1}{M^2}\left(\sum_{k=1}^M M {\rm Var}\{X_c^{(k)}\} + (M-1)	\bar{x}_c^{(k)2} - \sum_{\substack{
+	l=1 \\
+	l \neq k}							
+	}^M  \bar{x}_c^{(l)} \bar{x}_c^{(k)} \right).
+\end{equation}
+
+\noindent I haven't yet tested the population-level equations, but I'm fairly sure they are right.
+
+
+\subsection{Injecting more reality} 
 
 Time: Seth pointed out that it would be nice to have real time units.
 I think that this dynamic equation is general enough that time is just a scalar, and we can easily fix $f$ to reflect different consumption rates of prey.
@@ -122,7 +230,7 @@ Prey-switching: The above dynamics only apply to specialist consumers. I'm toyin
    \centering
    \includegraphics[width=0.5\textwidth]{fig_d13CvsTime.png}
       \caption{
-      A) The $\delta^{13}{\rm C}$ values of the simulated consumer over time (gray points). The analytical approximation is the black line.
+      A) The $\delta^{13}{\rm C}$ values of the simulated specialist consumer over time (gray points). The analytical approximation is the black line.
       B) Variability of $\delta^{13}{\rm C}$ values for the simulated forager over time. Bins are set to 200 steps; the smaller the bin, the less accurate the measure of SD.The analytical approximation for variability is the black line.
       }
       \label{fig_time}
@@ -130,15 +238,23 @@ Prey-switching: The above dynamics only apply to specialist consumers. I'm toyin
 
 \begin{figure*}[h!]
    \centering
-   \includegraphics[width=0.5\textwidth]{fig_d15NvsTime.png}
+   \includegraphics[width=0.5\textwidth]{fig_d13CvsTime_gen.png}
       \caption{
-      A) The $\delta^{15}{\rm N}$ values of the simulated consumer over time (gray points). The analytical approximation is the black line.
-      B) Variability of $\delta^{15}{\rm N}$ values for the simulated forager over time. Bins are set to 200 steps; the smaller the bin, the less accurate the measure of SD. The analytical approximation for variability is the black line.
+      A) The $\delta^{13}{\rm C}$ values of the simulated consumer with complex prey-switching (it generalizes over most prey, and specializes on three) over time (gray points). The analytical approximation is the black line.
+      B) Variability of $\delta^{13}{\rm C}$ values for the simulated forager over time. Bins are set to 300 steps; the smaller the bin, the less accurate the measure of SD. The analytical approximation for variability is the black line.
       }
       \label{fig_time}
 \end{figure*}
 
-
+\begin{figure*}[h!]
+   \centering
+   \includegraphics[width=0.5\textwidth]{fig_fvsSigma.pdf}
+      \caption{
+      The relationship between: x-axis: the incorporation rate $(1-f)$, y-axis: the consumed prey's standard deviation, and z-axis (colors): the standard deviation of the consumer at the asymptotic limit.
+      As the incorporation rate increases (such as for fast-turnover tissues), there is greater variance in the consumer for a given variance of consumed prey.
+      }
+      \label{fig_time}
+\end{figure*}
 
 
 

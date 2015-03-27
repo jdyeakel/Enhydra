@@ -99,8 +99,8 @@ As before, we assume that $X_i$ is normally distributed ($X_i \sim {\rm Norm}[\b
 We also want to assume that $p_i$ is a random variable, such that an individuals behavior can change over time.
 Because $\sum_{i=1}^N p_i = 1$, these variables are not independent.
 
-The random proportional contribution vector $p$ (of which $p_i$ is a single element, such that the vector sums to one) is distributed as a Dirichlet Distribution, which is an $N$-dimensional distribution where the individual elements can range from 0 to 1.
-The Dirichlet distribution is paramaterized by the vector $\bm a$, where each element has a value greater than one.
+The random proportional contribution vector $\bm p$ (of which $p_i$ is a single element, such that the vector sums to one) is distributed as a Dirichlet Distribution, which is an $N$-dimensional distribution where the individual elements can range from 0 to 1.
+The Dirichlet distribution is parameterized by the vector $\bm a$, where each element has a value greater than or equal to one.
 If all $a_i = 1$, the distribution is flat.
 If all $a_i = 1$, except for one element, which has an arbitrarily high number, the proportional contribution of that prey item will be large, whereas the rest will be low.
 As such, the mean proportional contribution of each prey item, as given by a particular Dirichlet distribution is
@@ -117,7 +117,7 @@ The variance of the proportional contribution of each prey item is then
 \end{equation}
 
 This is where things get tricky.
-Because the isotopic values that the consumer is integrating is now $Z = \sum_{i=1}^Np_iX_i$, where both $p_i$ and $X_i$ are random variables, we need to estimate the mean and variance of $Z$ so that we can integrate this into the stochastic differential equation framework.
+Because the isotopic value that the consumer is integrating is now $Z = \sum_{i=1}^Np_iX_i$, where both $p_i$ and $X_i$ are random variables, we need to estimate the mean and variance of $Z$ so that we can integrate this into the stochastic differential equation framework.
 When we put it all together, the stochastic differential equation is
 
 \begin{equation}
@@ -126,7 +126,7 @@ When we put it all together, the stochastic differential equation is
 
 There is some funny business about stochastic differential equations that we don't need to get into: because the timesteps are infinitely small, the variance of Brownian motion is infinitely large.
 The important point is that no matter what distribution you are sampling from, because of the central limit theorem, $X_c$ will be normally distributed at the long time limit.
-So assuming $Z \sim {\rm Norm}\{{\rm E}\{Z\}, \sqrt{{\rm Var}\{Z\}}\}$ is correct.
+So assuming $Z \sim {\rm Norm}\{{\rm E}\{Z\}, \sqrt{{\rm Var}\{Z\}}\}$ -- even if $Z$ isn't normally distributed by itself -- is correct.
 So now we want to find ${\rm E}\{Z\}$ and ${\rm Var}\{Z\}$.
 After much pain, we find
 

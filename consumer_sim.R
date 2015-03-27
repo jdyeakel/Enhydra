@@ -24,7 +24,7 @@ N = 1
 bmass <- rep(20,N)
 
 #Time-steps
-t_term <- 10000
+t_term <- 50000
 
 #Matrix for saving consumer C values
 c_m <- matrix(0,N,t_term)
@@ -53,7 +53,7 @@ n_m[,1] <- n_init
 #given the Dirichlet from which it is drawn
 Dir_param <- matrix(1,N,nprey)
 
-Dir_param[1,6:8] <- 10
+Dir_param[1,6] <- 10
 
 
 #Which prey item does each consumer specialize on?
@@ -119,7 +119,7 @@ for (t in 1:(t_term-1)) {
     #mp <- 1 #prey$Biomass[next_prey]
     
     #Define incorporation rate
-    incorp_rate <- 0.005
+    incorp_rate <- 0.25
 
     #weights for body size
     #f <- mb/(mb + mp)
@@ -200,11 +200,11 @@ par(mfrow=c(2,1))
 #Plotting observed and expected values for the expectation CARBON
 ind <- 1
 analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
-plot(c_m[ind,2:10000],pch=16,cex=0.5,xlab="time",ylab="d13C",col="gray")
+plot(c_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d13C",col="darkgray")
 lines(analyticEDir)
 
 #Plotting observed and expected values for the variance CARBON
-binsize = 1000
+binsize = 10000
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)
@@ -235,7 +235,7 @@ plot(n_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d15N",col="gray")
 lines(analyticEDir)
 
 #Plotting observed and expected values for the variance NITROGEN
-binsize = 500
+binsize = 5000
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*np_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)

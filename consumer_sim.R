@@ -24,7 +24,7 @@ N = 1
 bmass <- rep(20,N)
 
 #Time-steps
-t_term <- 50000
+t_term <- 5000
 
 #Matrix for saving consumer C values
 c_m <- matrix(0,N,t_term)
@@ -119,7 +119,7 @@ for (t in 1:(t_term-1)) {
     #mp <- 1 #prey$Biomass[next_prey]
     
     #Define incorporation rate
-    incorp_rate <- 0.1
+    incorp_rate <- 0.05
 
     #weights for body size
     #f <- mb/(mb + mp)
@@ -205,7 +205,7 @@ plot(c_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d13C",col="darkgray")
 lines(analyticEDir)
 
 #Plotting observed and expected values for the variance CARBON
-binsize = 10000
+binsize = 2000
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)

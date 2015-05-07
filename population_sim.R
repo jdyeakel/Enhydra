@@ -120,7 +120,7 @@ for (t in 1:(t_term-1)) {
     #mp <- 1 #prey$Biomass[next_prey]
     
     #Define incorporation rate
-    incorp_rate <- 0.1
+    incorp_rate <- 0.05
     
     #weights for body size
     #f <- mb/(mb + mp)
@@ -233,10 +233,10 @@ par(mfrow=c(2,1))
 # lines(analyticE)
 
 #Plotting observed and expected values for the expectation CARBON
-ind <- 1
-analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
+ind <- 2
+analyticEDir <- sapply(seq(1,t_term),function(x){f^x*(c_init[init] - EDir_c) + EDir_c})
 plot(c_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d13C",col="darkgray")
-lines(analyticEDir)
+lines(analyticEDir[ind,])
 
 #Plotting observed and expected values for the variance CARBON
 binsize = 100

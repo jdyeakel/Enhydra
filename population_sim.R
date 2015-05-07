@@ -18,13 +18,13 @@ for (i in 1:nprey) {
 }
 
 #Number of consumers
-N = 1
+N = 2
 
 #Body size of consumers (kg)
 bmass <- rep(20,N)
 
 #Time-steps
-t_term <- 50000
+t_term <- 5000
 
 #Matrix for saving consumer C values
 c_m <- matrix(0,N,t_term)
@@ -53,7 +53,8 @@ n_m[,1] <- n_init
 #given the Dirichlet from which it is drawn
 Dir_param <- matrix(1,N,nprey)
 
-Dir_param[7] <- 20
+Dir_param[1,7] <- 10000
+Dir_param[2,6] <- 10000
 
 
 #Which prey item does each consumer specialize on?
@@ -80,21 +81,21 @@ for (t in 1:(t_term-1)) {
     
     #RANDOM DRAW VERSION
     #Draw random value
-#     rdraw <- runif(1)
-#     if (rdraw < theta[i]) {
-#       #If specialist, select it's preferred prey
-#       next_prey <- s_prey[i]
-#     } else {
-#       #If generalist, randomly select from all prey
-#       next_prey <- sample(nprey,1,replace=TRUE)
-#     }
-#     #Randomly draw prey isotope values from known mean and sd
-#     cp_mean <- prey$CM[next_prey]
-#     cp_sd <- prey$CSD[next_prey]
-#     cp <- rnorm(1,cp_mean,cp_sd)
-#     np_mean <- prey$NM[next_prey]
-#     np_sd <- prey$NSD[next_prey]
-#     np <- rnorm(1,np_mean,np_sd)
+    #     rdraw <- runif(1)
+    #     if (rdraw < theta[i]) {
+    #       #If specialist, select it's preferred prey
+    #       next_prey <- s_prey[i]
+    #     } else {
+    #       #If generalist, randomly select from all prey
+    #       next_prey <- sample(nprey,1,replace=TRUE)
+    #     }
+    #     #Randomly draw prey isotope values from known mean and sd
+    #     cp_mean <- prey$CM[next_prey]
+    #     cp_sd <- prey$CSD[next_prey]
+    #     cp <- rnorm(1,cp_mean,cp_sd)
+    #     np_mean <- prey$NM[next_prey]
+    #     np_sd <- prey$NSD[next_prey]
+    #     np <- rnorm(1,np_mean,np_sd)
     
     
     #DIRICHLET VERSION
@@ -120,11 +121,11 @@ for (t in 1:(t_term-1)) {
     
     #Define incorporation rate
     incorp_rate <- 0.1
-
+    
     #weights for body size
     #f <- mb/(mb + mp)
     f <- 1 - incorp_rate
-
+    
     cb_next <- f*cb + (1-f)*cp
     nb_next <- f*nb + (1-f)*np
     
@@ -136,6 +137,69 @@ for (t in 1:(t_term-1)) {
 } #end t
 
 
+
+#Calculate the analytical expectation and variance trajectory for EACH INDIVIDUAL
+E_lim_c <- numeric(N)
+E_lim_n <- numeric(N)
+Var_lim_c <- numeric(N)
+Var_lim_n <- numeric(N)
+
+for (i in 1:N) {
+  
+  #ind <- 1
+  #plot(c_m[ind,],pch=16,cex=0.25) #; lines(c_m[ind,])
+  
+  #Dirichlet-Normal Approximation for expectation and variance
+  a0 <- sum(Dir_param[i,1:nprey])
+  
+  #Expectation of the sum(p_i*X_i) quantity
+  EDir_c <- (Dir_param[i,1:nprey]/a0) %*% prey$CM
+  EDir_n <- (Dir_param[i,1:nprey]/a0) %*% prey$NM
+  
+  #Expectation of p_i
+  Ep <- Dir_param[i,1:nprey]/a0
+  
+  #Variance of p_i
+  VarDir_p <- sapply(Dir_param[i,],function(x){(x*(a0-x)) / (a0^2*(a0+1))})
+  
+  #Covariance of p_i,p_j
+  CovDir_p <- matrix(0,nprey,nprey)
+  for (k in 1:nprey) {
+    for (j in 1:nprey) {
+      CovDir_p[k,j] <- -(Dir_param[i,k]*Dir_param[i,j]) / (a0^2*(a0 + 1))
+    }
+  } 
+  diag(CovDir_p) <- 0
+  
+  #Variance of the sum(p_i*X_i) quantity for CARBON
+  VarDir_c_vec <- numeric(nprey)
+  for (j in 1:nprey) {
+    VarDir_c_vec[j] <- (prey$CSD[j]^2)*VarDir_p[j] + Ep[j]^2*(prey$CSD[j])^2  + VarDir_p[j]*prey$CM[j]^2 + prey$CM[j]*sum(CovDir_p[j,-j] * prey$CM[-j])       
+  }
+  VarDir_c <- sum(VarDir_c_vec)
+  
+  #Variance of the sum(p_i*X_i) quantity for NITROGEN
+  VarDir_n_vec <- numeric(nprey)
+  for (j in 1:nprey) {
+    VarDir_n_vec[j] <- (prey$NSD[j]^2)*VarDir_p[j] + Ep[j]^2 * prey$NSD[j]^2  + VarDir_p[j]*prey$NM[j]^2 + prey$NM[j]*sum(CovDir_p[j,-j] * prey$NM[-j])       
+  }
+  VarDir_n <- sum(VarDir_n_vec)
+  
+  #Individual expectations as a function of time.
+  analyticEDir_c <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
+  analyticEDir_n <- sapply(seq(1,t_term),function(x){f^x*(n_init - EDir_n) + EDir_n})
+  #Individual SD as a function of time
+  analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
+  analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
+  
+  #Limit
+  E_lim_c[i] <- analyticEDir_c[t_term]
+  E_lim_n[i] <- analyticEDir_n[t_term]
+  Var_lim_c[i] <- analyticDirSD_c[t_term]^2
+  Var_lim_n[i] <- analyticDirSD_n[t_term]^2
+  
+}
+
 colors <- rep(brewer.pal(8,"Set1"),round(N/9)+1)
 #Plot prey ellipses
 plot(ellip_prey[[1]],type="l",xlim=c(-22,-10),ylim=c(6,18),col="gray",xlab="d13C",ylab="d15N")
@@ -146,46 +210,16 @@ for (i in 1:N) {
   ind <- i
   points(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
   lines(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
+  lines(ellipse(x=0,scale = c(sqrt(Var_lim_c[i]),sqrt(Var_lim_n[i])),centre=c(E_lim_c[i],E_lim_n[i]),level=CI))
 }
+points(E_lim_c,E_lim_n,col="black",pch=16,cex=0.7)
 
-#ind <- 1
-#plot(c_m[ind,],pch=16,cex=0.25) #; lines(c_m[ind,])
 
-#Dirichlet-Normal Approximation for expectation and variance
-a0 <- sum(Dir_param[1,1:nprey])
 
-#Expectation of the sum(p_i*X_i) quantity
-EDir_c <- (Dir_param[1,1:nprey]/a0) %*% prey$CM
-EDir_n <- (Dir_param[1,1:nprey]/a0) %*% prey$NM
 
-#Expectation of p_i
-Ep <- Dir_param[1,1:nprey]/a0
 
-#Variance of p_i
-VarDir_p <- sapply(Dir_param,function(x){(x*(a0-x)) / (a0^2*(a0+1))})
 
-#Covariance of p_i,p_j
-CovDir_p <- matrix(0,nprey,nprey)
-for (i in 1:nprey) {
-  for (j in 1:nprey) {
-    CovDir_p[i,j] <- -(Dir_param[i]*Dir_param[j]) / (a0^2*(a0 + 1))
-  }
-} 
-diag(CovDir_p) <- 0
 
-#Variance of the sum(p_i*X_i) quantity for CARBON
-VarDir_c_vec <- numeric(nprey)
-for (i in 1:nprey) {
-  VarDir_c_vec[i] <- (prey$CSD[i]^2)*VarDir_p[i] + Ep[i]^2*(prey$CSD[i])^2  + VarDir_p[i]*prey$CM[i]^2 + prey$CM[i]*sum(CovDir_p[i,-i] * prey$CM[-i])       
-}
-VarDir_c <- sum(VarDir_c_vec)
-
-#Variance of the sum(p_i*X_i) quantity for NITROGEN
-VarDir_n_vec <- numeric(nprey)
-for (i in 1:nprey) {
-  VarDir_n_vec[i] <- (prey$NSD[i]^2)*VarDir_p[i] + Ep[i]^2 * prey$NSD[i]^2  + VarDir_p[i]*prey$NM[i]^2 + prey$NM[i]*sum(CovDir_p[i,-i] * prey$NM[-i])       
-}
-VarDir_n <- sum(VarDir_n_vec)
 
 
 
@@ -205,7 +239,7 @@ plot(c_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d13C",col="darkgray")
 lines(analyticEDir)
 
 #Plotting observed and expected values for the variance CARBON
-binsize = 10000
+binsize = 100
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)

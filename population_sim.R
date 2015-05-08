@@ -234,12 +234,12 @@ for (i in 1:N) {
   ind <- i
   points(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
   lines(c_m[ind,],n_m[ind,],pch=16,cex=0.25,col=colors[i])
-  lines(ellipse(x=0,scale = c(sqrt(Var_lim_c[i]),sqrt(Var_lim_n[i])),centre=c(E_lim_c[i],E_lim_n[i]),level=CI))
+  lines(ellipse(x=0,scale=c(sqrt(Var_lim_c[i]),sqrt(Var_lim_n[i])),centre=c(E_lim_c[i],E_lim_n[i]),level=CI))
 }
 points(E_lim_c,E_lim_n,col="black",pch=16,cex=0.7)
 #Population Ellipse
 #pop_ellipse <- ellipse(x=0,scale=c(sqrt(Var_lim_pop_c),sqrt(Var_lim_pop_n)),centre=Exp_lim_pop)
-pop_ellipse <- ellipse(x=0,scale=matrix(c(Var_lim_pop_c,cov_cn,cov_nc,Var_lim_pop_n),2,2),centre=Exp_lim_pop)
+pop_ellipse <- ellipse(matrix(c(Var_lim_pop_c,cov_cn,cov_nc,Var_lim_pop_n),2,2),centre=Exp_lim_pop)
 points(Exp_lim_pop[1],Exp_lim_pop[2],pch=16,col="black")
 lines(pop_ellipse,col="black",lty=3,lwd=3)
 

@@ -18,7 +18,7 @@ for (i in 1:nprey) {
 }
 
 #Number of consumers
-N = 2
+N = 3
 
 #Body size of consumers (kg)
 bmass <- rep(20,N)
@@ -55,6 +55,7 @@ Dir_param <- matrix(1,N,nprey)
 
 Dir_param[1,7] <- 10000
 Dir_param[2,6] <- 10000
+Dir_param[3,6] <- 10
 
 
 #Which prey item does each consumer specialize on?
@@ -201,7 +202,7 @@ for (i in 1:N) {
 }
 
 
-#Combine individual measurements to get population statistics
+#Combine individual measurements to get population statistics (at the limit)
 Exp_lim_pop <- c(rep((1/N),N) %*% E_lim_c,rep((1/N),N) %*% E_lim_n)
 
 Var_lim_pop_vec_c <- numeric(N)
@@ -215,14 +216,8 @@ Var_lim_pop_n <- (1/(N^2))*sum(Var_lim_pop_vec_n)
 
 #NEED COVARIANCE BTW C AND N FOR THE POPULATIONS
 
-cov_cn <- ((rep((1/N),N) %*% (E_lim_c*E_lim_n)) - (Exp_lim_pop[1]*Exp_lim_pop[2]))
-cov_nc <- ((rep((1/N),N) %*% (E_lim_n*E_lim_c)) - (Exp_lim_pop[2]*Exp_lim_pop[1]))
-
-rawdat <- cbind(c(c_m[1,4980:5000]+0.5,c_m[2,4980:5000]),c(n_m[1,4980:5000]-0.5,n_m[2,4980:5000]))
-rawdat <- cbind(c(c_m[1,4980:5000]),c(n_m[1,4980:5000]))
-plot(rawdat)
-cov(rawdat)
-rawdatell <- ellipse(x=0,scale=cov(rawdat),centre=apply(rawdat,2,mean))
+cov_pop <- ((rep((1/N),N) %*% (E_lim_c*E_lim_n)) - (Exp_lim_pop[1]*Exp_lim_pop[2]))
+pop_Sigma <- matrix(c(Var_lim_pop_c,cov_pop,cov_pop,Var_lim_pop_n),2,2)
 
 colors <- rep(brewer.pal(8,"Set1"),round(N/9)+1)
 #Plot prey ellipses
@@ -239,7 +234,7 @@ for (i in 1:N) {
 points(E_lim_c,E_lim_n,col="black",pch=16,cex=0.7)
 #Population Ellipse
 #pop_ellipse <- ellipse(x=0,scale=c(sqrt(Var_lim_pop_c),sqrt(Var_lim_pop_n)),centre=Exp_lim_pop)
-pop_ellipse <- ellipse(matrix(c(Var_lim_pop_c,cov_cn,cov_nc,Var_lim_pop_n),2,2),centre=Exp_lim_pop)
+pop_ellipse <- ellipse(pop_Sigma,centre=Exp_lim_pop)
 points(Exp_lim_pop[1],Exp_lim_pop[2],pch=16,col="black")
 lines(pop_ellipse,col="black",lty=3,lwd=3)
 

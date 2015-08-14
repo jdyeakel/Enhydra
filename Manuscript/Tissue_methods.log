@@ -1,7 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  28 MAY 2015 14:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  8 MAY 2015 11:56
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **Tissue_methods.tex
 (./Tissue_methods.tex
@@ -23,18 +22,23 @@ File: size11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/geometry/geometry.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
- (/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
-) (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
-) (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifvtex.sty
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
-) (/usr/local/texlive/2014/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 \Gm@cnth=\count87
@@ -49,30 +53,36 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen109
 \Gm@layoutvoffset=\dimen110
 \Gm@dimlist=\toks15
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/setspace/setspace.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen111
 \WF@size=\dimen112
 \c@WF@wrappedlines=\count90
 \WF@box=\box26
 \WF@everypar=\toks16
 Package: wrapfig 2003/01/31  v 3.6
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsmath.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip43
 
 For additional information on amsmath, use the `?' option.
 (/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
- (/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsgen.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks17
 \ex@=\dimen113
-)) (/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsbsy.sty
+))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen114
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsopn.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count91
@@ -112,75 +122,95 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \mathdisplay@stack=\toks21
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amssymb.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
- (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphicx.sty
+))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphics.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/trig.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/graphics.cfg
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
- (/usr/local/texlive/2014/texmf-dist/tex/latex/pdftex-def/pdftex.def
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
- (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
-) (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count103
 ))
 \Gin@req@height=\dimen122
 \Gin@req@width=\dimen123
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/mathrsfs.sty
 Package: mathrsfs 1996/01/01 Math RSFS package v1.0 (jk)
 \symrsfs=\mathgroup6
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/tools/bm.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/tools/bm.sty
 Package: bm 2004/02/26 v1.1c Bold Symbol Support (DPC/FMi)
 \symboldoperators=\mathgroup7
 \symboldletters=\mathgroup8
 \symboldsymbols=\mathgroup9
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 137.
 LaTeX Info: Redefining \bm on input line 203.
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/wasysym/wasysym.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/wasysym/wasysym.sty
 Package: wasysym 2003/10/30 v2.0 Wasy-2 symbol support package
 \symwasy=\mathgroup10
 LaTeX Font Info:    Overwriting symbol font `wasy' in version `bold'
 (Font)                  U/wasy/m/n --> U/wasy/b/n on input line 90.
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/placeins/placeins.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/placeins/placeins.sty
 Package: placeins 2005/04/18  v 2.2
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/multirow/multirow.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/multirow/multirow.sty
 \bigstrutjot=\dimen124
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/base/fontenc.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
- (/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.def
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
-)) (/usr/local/texlive/2014/texmf-dist/tex/latex/natbib/natbib.sty
+))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip46
 \bibsep=\skip47
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count104
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/framed/framed.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \OuterFrameSep=\skip48
 \fb@frw=\dimen125
 \fb@frh=\dimen126
 \FrameRule=\dimen127
 \FrameSep=\dimen128
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
- (/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption3.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen129
@@ -193,7 +223,8 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 )
 \c@ContinuedFloat=\count105
 Package caption Info: wrapfig package is loaded.
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/tools/longtable.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
 \LTleft=\skip49
 \LTright=\skip50
@@ -210,7 +241,8 @@ Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
 \c@LT@tables=\count109
 \c@LT@chunks=\count110
 \LT@p@ftn=\toks22
-) (/Users/justinyeakel/Dropbox/Enhydra/Tissue Project/Manuscript/.texpadtmp/Tissue_methods.aux
+)
+(./Tissue_methods.aux
 
 LaTeX Warning: Label `fig_time' multiply defined.
 
@@ -284,8 +316,10 @@ LaTeX Font Info:    ... okay on input line 28.
 \makeMPintoPDFobject=\count116
 \everyMPtoPDFconversion=\toks24
 ) (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO)
- (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -293,17 +327,23 @@ Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
- (/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/grfext.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
- (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
-)) (/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
- (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
 Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
- (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
@@ -311,31 +351,39 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             In the latter case, load this package earlier.
 )))
 Package grfext Info: Graphics extension search list:
-(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG,.JBIG2,.JB2,.eps]
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
- (/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: longtable package is loaded.
- (/usr/local/texlive/2014/texmf-dist/tex/latex/caption/ltcaption.sty
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/caption/ltcaption.sty
 Package: ltcaption 2013/02/03 v1.3-62 longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Try loading font information for U+msa on input line 32.
- (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 32.
- (/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsb.fd
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for U+rsfs on input line 32.
- (/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/ursfs.fd
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Try loading font information for U+wasy on input line 32.
- (/usr/local/texlive/2014/texmf-dist/tex/latex/wasysym/uwasy.fd
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 )
 
@@ -343,14 +391,17 @@ LaTeX Warning: No \author given.
 
 [1
 
-{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4] <fig_bivariate.png, id=29, 680.5425pt x 631.35875pt>
+{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2] [3] [4] <fig_bivariate.png, id=29, 680.5425pt x 631.35875pt>
 File: fig_bivariate.png Graphic file (type png)
- <use fig_bivariate.png>
+
+<use fig_bivariate.png>
 Package pdftex.def Info: fig_bivariate.png used on input line 231.
 (pdftex.def)             Requested size: 234.8775pt x 217.89607pt.
  <fig_d13CvsTime.png, id=31, 678.535pt x 829.0975pt>
 File: fig_d13CvsTime.png Graphic file (type png)
- <use fig_d13CvsTime.png>
+
+<use fig_d13CvsTime.png>
 Package pdftex.def Info: fig_d13CvsTime.png used on input line 240.
 (pdftex.def)             Requested size: 234.8775pt x 286.98778pt.
 
@@ -359,7 +410,8 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 <fig_d13CvsTime_gen.png, id=32, 877.2775pt x 778.91pt>
 File: fig_d13CvsTime_gen.png Graphic file (type png)
- <use fig_d13CvsTime_gen.png>
+
+<use fig_d13CvsTime_gen.png>
 Package pdftex.def Info: fig_d13CvsTime_gen.png used on input line 250.
 (pdftex.def)             Requested size: 234.8775pt x 208.53761pt.
 
@@ -377,28 +429,44 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 <fig_pop_isospace.pdf, id=34, 735.74875pt x 548.0475pt>
 File: fig_pop_isospace.pdf Graphic file (type pdf)
- <use fig_pop_isospace.pdf>
+
+<use fig_pop_isospace.pdf>
 Package pdftex.def Info: fig_pop_isospace.pdf used on input line 271.
 (pdftex.def)             Requested size: 352.31625pt x 262.44098pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5 <./fig_bivariate.png>] [6 <./fig_d13CvsTime.png> <./fig_d13CvsTime_gen.png>] [7 <./fig_fvsSigma.pdf> <./fig_pop_isospace.pdf>] (/Users/justinyeakel/Dropbox/Enhydra/Tissue Project/Manuscript/.texpadtmp/Tissue_methods.aux)
+[5 <./fig_bivariate.png>] [6 <./fig_d13CvsTime.png> <./fig_d13CvsTime_gen.png>]
+[7 <./fig_fvsSigma.pdf> <./fig_pop_isospace.pdf>] (./Tissue_methods.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 5043 strings out of 493117
- 71910 string characters out of 6135433
+ 5042 strings out of 493117
+ 71401 string characters out of 6135433
  141998 words of memory out of 5000000
  8387 multiletter control sequences out of 15000+600000
  20439 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,10n,38p,583b,286s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
-Output written on "/Users/justinyeakel/Dropbox/Enhydra/Tissue Project/Manuscript/.texpadtmp/Tissue_methods.pdf" (7 pages, 1292142 bytes).
+{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></us
+r/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
+local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loc
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loca
+l/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/
+texlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/te
+xlive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texl
+ive/2014/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texliv
+e/2014/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/
+2014/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/20
+14/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
+Output written on Tissue_methods.pdf (7 pages, 1292125 bytes).
 PDF statistics:
  133 PDF objects out of 1000 (max. 8388607)
  90 compressed objects within 1 object stream

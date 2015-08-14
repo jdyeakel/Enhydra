@@ -26,178 +26,199 @@ bmass <- rep(20,N)
 #Time-steps
 t_term <- 5000
 
-#Matrix for saving consumer C values
-c_m <- matrix(0,N,t_term)
-
-#Matrix for saving consumer N values
-n_m <- matrix(0,N,t_term)
-
-#Matrix cor saving consumer prey bouts
-d_m <- matrix(0,N,t_term)
-
-#Initial consumer isotope values
-#For now, the initial value will just be the means of the prey
-c_init <- rep(mean(prey$CM),N)
-n_init <- rep(mean(prey$NM),N)
-
-c_m[,1] <- c_init
-n_m[,1] <- n_init
-
-#0 indicates generalist; 1 indicates specialist
-#theta <- rep(1,N)
-#theta <- rep(1,N)
-
-#Dirichlet distribution for p_vector
-#p_vector is the proportional contribution of prey to the diet of consumer
-#p_vector determines a per-diem vector of proportional contributions
-#given the Dirichlet from which it is drawn
-Dir_param <- matrix(1,N,nprey)
-
-Dir_param[1,7] <- 1000
+alpha_seq <- seq(1,1000,1)
+propi = numeric(length(alpha_seq))
+Var_x_c <- numeric(length(alpha_seq))
+VarA_x_c <- numeric(length(alpha_seq))
 
 
-#Which prey item does each consumer specialize on?
-s_prey <- sample(nprey,N,replace=TRUE)
-#cumulative distribution
-#plot(sapply(seq(1,12),function(x){length(which(s_prey<x))/length(s_prey)}))
-
-#Loop over time
-for (t in 1:(t_term-1)) {
+for (jj in 1:length(alpha_seq)) {
   
-  #Loop over consumers
+  #Matrix for saving consumer C values
+  c_m <- matrix(0,N,t_term)
+  
+  #Matrix for saving consumer N values
+  n_m <- matrix(0,N,t_term)
+  
+  #Matrix cor saving consumer prey bouts
+  d_m <- matrix(0,N,t_term)
+  
+  #Initial consumer isotope values
+  #For now, the initial value will just be the means of the prey
+  c_init <- rep(mean(prey$CM),N)
+  n_init <- rep(mean(prey$NM),N)
+  
+  c_m[,1] <- c_init
+  n_m[,1] <- n_init
+  
+  #0 indicates generalist; 1 indicates specialist
+  #theta <- rep(1,N)
+  #theta <- rep(1,N)
+  
+  #Dirichlet distribution for p_vector
+  #p_vector is the proportional contribution of prey to the diet of consumer
+  #p_vector determines a per-diem vector of proportional contributions
+  #given the Dirichlet from which it is drawn
+  Dir_param <- matrix(1,N,nprey)
+  
+  Dir_param[1,7] <- alpha_seq[jj]
+  
+  
+  #Which prey item does each consumer specialize on?
+  s_prey <- sample(nprey,N,replace=TRUE)
+  #cumulative distribution
+  #plot(sapply(seq(1,12),function(x){length(which(s_prey<x))/length(s_prey)}))
+  
+  #Loop over time
+  for (t in 1:(t_term-1)) {
+    
+    #Loop over consumers
+    for (i in 1:N) {
+      #Define the carbon, nitrogen isotope values of body at time t
+      cb <- c_m[i,t]
+      nb <- n_m[i,t]
+      
+      #Define body mass of consumer
+      #mb <- bmass[i]
+      
+      #Determine next prey item
+      
+      #With probability equal to e_gen[i], they will specialize
+      #With probability equal to 1-e_gen[i], they will draw from prey randomly
+      
+      #RANDOM DRAW VERSION
+      #Draw random value
+      #     rdraw <- runif(1)
+      #     if (rdraw < theta[i]) {
+      #       #If specialist, select it's preferred prey
+      #       next_prey <- s_prey[i]
+      #     } else {
+      #       #If generalist, randomly select from all prey
+      #       next_prey <- sample(nprey,1,replace=TRUE)
+      #     }
+      #     #Randomly draw prey isotope values from known mean and sd
+      #     cp_mean <- prey$CM[next_prey]
+      #     cp_sd <- prey$CSD[next_prey]
+      #     cp <- rnorm(1,cp_mean,cp_sd)
+      #     np_mean <- prey$NM[next_prey]
+      #     np_sd <- prey$NSD[next_prey]
+      #     np <- rnorm(1,np_mean,np_sd)
+      
+      
+      #DIRICHLET VERSION
+      #draw proportional contribution vector from random dirichlet
+      p_vec <- numeric(nprey)
+      #if (N == 1) {
+      #  p_vec[1:nprey-1] <- rdirichlet(1,Dir_param)
+      #} else {
+      p_vec[1:nprey] <- rdirichlet(1,Dir_param[i,])
+      #}
+      #p_vec[nprey] <- 1 - sum(p_vec)
+      #Draw prey values from each prey
+      cp_vec <- sapply(seq(1,nprey),function(x){rnorm(1,prey$CM[x],prey$CSD[x])})
+      np_vec <- sapply(seq(1,nprey),function(x){rnorm(1,prey$NM[x],prey$NSD[x])})
+      #Calculate weighted average
+      cp <- p_vec %*% cp_vec
+      np <- p_vec %*% np_vec
+      
+      #Prey biomass
+      #set to one if each prey is to be equally weighted
+      #(assume 1 kg of each thing is eaten rather than at individual level)
+      #mp <- 1 #prey$Biomass[next_prey]
+      
+      #Define incorporation rate
+      incorp_rate <- 0.05
+      
+      #weights for body size
+      #f <- mb/(mb + mp)
+      f <- 1 - incorp_rate
+      
+      cb_next <- f*cb + (1-f)*cp
+      nb_next <- f*nb + (1-f)*np
+      
+      c_m[i,t+1] <- cb_next
+      n_m[i,t+1] <- nb_next
+      
+    } #end i
+    
+  } #end t
+  
+  Var_x_c[jj] <- var(c_m[i,4000:5000])
+  
+  #Calculate the analytical expectation and variance trajectory for EACH INDIVIDUAL
+  E_lim_c <- numeric(N)
+  E_lim_n <- numeric(N)
+  Var_lim_c <- numeric(N)
+  Var_lim_n <- numeric(N)
+  
+  
   for (i in 1:N) {
-    #Define the carbon, nitrogen isotope values of body at time t
-    cb <- c_m[i,t]
-    nb <- n_m[i,t]
     
-    #Define body mass of consumer
-    #mb <- bmass[i]
+    #ind <- 1
+    #plot(c_m[ind,],pch=16,cex=0.25) #; lines(c_m[ind,])
     
-    #Determine next prey item
+    #Dirichlet-Normal Approximation for expectation and variance
+    a0 <- sum(Dir_param[i,1:nprey])
     
-    #With probability equal to e_gen[i], they will specialize
-    #With probability equal to 1-e_gen[i], they will draw from prey randomly
+    propi[[jj]] = alpha_seq[jj]/a0
     
-    #RANDOM DRAW VERSION
-    #Draw random value
-    #     rdraw <- runif(1)
-    #     if (rdraw < theta[i]) {
-    #       #If specialist, select it's preferred prey
-    #       next_prey <- s_prey[i]
-    #     } else {
-    #       #If generalist, randomly select from all prey
-    #       next_prey <- sample(nprey,1,replace=TRUE)
-    #     }
-    #     #Randomly draw prey isotope values from known mean and sd
-    #     cp_mean <- prey$CM[next_prey]
-    #     cp_sd <- prey$CSD[next_prey]
-    #     cp <- rnorm(1,cp_mean,cp_sd)
-    #     np_mean <- prey$NM[next_prey]
-    #     np_sd <- prey$NSD[next_prey]
-    #     np <- rnorm(1,np_mean,np_sd)
+    #Expectation of the sum(p_i*X_i) quantity
+    EDir_c <- (Dir_param[i,1:nprey]/a0) %*% prey$CM
+    EDir_n <- (Dir_param[i,1:nprey]/a0) %*% prey$NM
     
+    #Expectation of p_i
+    Ep <- Dir_param[i,1:nprey]/a0
     
-    #DIRICHLET VERSION
-    #draw proportional contribution vector from random dirichlet
-    p_vec <- numeric(nprey)
-    #if (N == 1) {
-    #  p_vec[1:nprey-1] <- rdirichlet(1,Dir_param)
-    #} else {
-    p_vec[1:nprey] <- rdirichlet(1,Dir_param[i,])
-    #}
-    #p_vec[nprey] <- 1 - sum(p_vec)
-    #Draw prey values from each prey
-    cp_vec <- sapply(seq(1,nprey),function(x){rnorm(1,prey$CM[x],prey$CSD[x])})
-    np_vec <- sapply(seq(1,nprey),function(x){rnorm(1,prey$NM[x],prey$NSD[x])})
-    #Calculate weighted average
-    cp <- p_vec %*% cp_vec
-    np <- p_vec %*% np_vec
+    #Variance of p_i
+    VarDir_p <- sapply(Dir_param[i,],function(x){(x*(a0-x)) / (a0^2*(a0+1))})
     
-    #Prey biomass
-    #set to one if each prey is to be equally weighted
-    #(assume 1 kg of each thing is eaten rather than at individual level)
-    #mp <- 1 #prey$Biomass[next_prey]
+    #Covariance of p_i,p_j
+    CovDir_p <- matrix(0,nprey,nprey)
+    for (k in 1:nprey) {
+      for (j in 1:nprey) {
+        CovDir_p[k,j] <- -(Dir_param[i,k]*Dir_param[i,j]) / (a0^2*(a0 + 1))
+      }
+    } 
+    diag(CovDir_p) <- 0
     
-    #Define incorporation rate
-    incorp_rate <- 0.05
-    
-    #weights for body size
-    #f <- mb/(mb + mp)
-    f <- 1 - incorp_rate
-    
-    cb_next <- f*cb + (1-f)*cp
-    nb_next <- f*nb + (1-f)*np
-    
-    c_m[i,t+1] <- cb_next
-    n_m[i,t+1] <- nb_next
-    
-  } #end i
-  
-} #end t
-
-
-
-#Calculate the analytical expectation and variance trajectory for EACH INDIVIDUAL
-E_lim_c <- numeric(N)
-E_lim_n <- numeric(N)
-Var_lim_c <- numeric(N)
-Var_lim_n <- numeric(N)
-
-for (i in 1:N) {
-  
-  #ind <- 1
-  #plot(c_m[ind,],pch=16,cex=0.25) #; lines(c_m[ind,])
-  
-  #Dirichlet-Normal Approximation for expectation and variance
-  a0 <- sum(Dir_param[i,1:nprey])
-  
-  #Expectation of the sum(p_i*X_i) quantity
-  EDir_c <- (Dir_param[i,1:nprey]/a0) %*% prey$CM
-  EDir_n <- (Dir_param[i,1:nprey]/a0) %*% prey$NM
-  
-  #Expectation of p_i
-  Ep <- Dir_param[i,1:nprey]/a0
-  
-  #Variance of p_i
-  VarDir_p <- sapply(Dir_param[i,],function(x){(x*(a0-x)) / (a0^2*(a0+1))})
-  
-  #Covariance of p_i,p_j
-  CovDir_p <- matrix(0,nprey,nprey)
-  for (k in 1:nprey) {
+    #Variance of the sum(p_i*X_i) quantity for CARBON
+    VarDir_c_vec <- numeric(nprey)
     for (j in 1:nprey) {
-      CovDir_p[k,j] <- -(Dir_param[i,k]*Dir_param[i,j]) / (a0^2*(a0 + 1))
+      VarDir_c_vec[j] <- (prey$CSD[j]^2)*VarDir_p[j] + Ep[j]^2*(prey$CSD[j])^2  + VarDir_p[j]*prey$CM[j]^2 + prey$CM[j]*sum(CovDir_p[j,-j] * prey$CM[-j])       
     }
-  } 
-  diag(CovDir_p) <- 0
-  
-  #Variance of the sum(p_i*X_i) quantity for CARBON
-  VarDir_c_vec <- numeric(nprey)
-  for (j in 1:nprey) {
-    VarDir_c_vec[j] <- (prey$CSD[j]^2)*VarDir_p[j] + Ep[j]^2*(prey$CSD[j])^2  + VarDir_p[j]*prey$CM[j]^2 + prey$CM[j]*sum(CovDir_p[j,-j] * prey$CM[-j])       
+    VarDir_c <- sum(VarDir_c_vec)
+    
+    #Variance of the sum(p_i*X_i) quantity for NITROGEN
+    VarDir_n_vec <- numeric(nprey)
+    for (j in 1:nprey) {
+      VarDir_n_vec[j] <- (prey$NSD[j]^2)*VarDir_p[j] + Ep[j]^2 * prey$NSD[j]^2  + VarDir_p[j]*prey$NM[j]^2 + prey$NM[j]*sum(CovDir_p[j,-j] * prey$NM[-j])       
+    }
+    VarDir_n <- sum(VarDir_n_vec)
+    
+    #Individual expectations as a function of time.
+    analyticEDir_c <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
+    analyticEDir_n <- sapply(seq(1,t_term),function(x){f^x*(n_init - EDir_n) + EDir_n})
+    #Individual SD as a function of time
+    analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
+    analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
+    
+    #Limit
+    E_lim_c[i] <- analyticEDir_c[t_term]
+    E_lim_n[i] <- analyticEDir_n[t_term]
+    Var_lim_c[i] <- analyticDirSD_c[t_term]^2
+    Var_lim_n[i] <- analyticDirSD_n[t_term]^2
+    
   }
-  VarDir_c <- sum(VarDir_c_vec)
   
-  #Variance of the sum(p_i*X_i) quantity for NITROGEN
-  VarDir_n_vec <- numeric(nprey)
-  for (j in 1:nprey) {
-    VarDir_n_vec[j] <- (prey$NSD[j]^2)*VarDir_p[j] + Ep[j]^2 * prey$NSD[j]^2  + VarDir_p[j]*prey$NM[j]^2 + prey$NM[j]*sum(CovDir_p[j,-j] * prey$NM[-j])       
-  }
-  VarDir_n <- sum(VarDir_n_vec)
+  VarA_x_c[jj] <- Var_lim_c
   
-  #Individual expectations as a function of time.
-  analyticEDir_c <- sapply(seq(1,t_term),function(x){f^x*(c_init - EDir_c) + EDir_c})
-  analyticEDir_n <- sapply(seq(1,t_term),function(x){f^x*(n_init - EDir_n) + EDir_n})
-  #Individual SD as a function of time
-  analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
-  analyticDirSD_n <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_n*(f-1)*(exp(2*(f-1)*x)-1))})
-  
-  #Limit
-  E_lim_c[i] <- analyticEDir_c[t_term]
-  E_lim_n[i] <- analyticEDir_n[t_term]
-  Var_lim_c[i] <- analyticDirSD_c[t_term]^2
-  Var_lim_n[i] <- analyticDirSD_n[t_term]^2
-  
-}
+} #end jj
+
+plot(propi,VarA_x_c,
+     ylim=c(min(c(VarA_x_c,Var_x_c)),max(c(VarA_x_c,Var_x_c))),pch=16,cex=0.8,
+     xlab="Specialization",ylab=expression("Consumer niche width as t" %->% infinity))
+points(propi,Var_x_c,pch=16,cex=0.4)
+
 
 
 #Combine individual measurements to get population statistics (at the limit)

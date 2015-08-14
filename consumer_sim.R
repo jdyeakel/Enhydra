@@ -205,7 +205,7 @@ plot(c_m[ind,2:t_term],pch=16,cex=0.5,xlab="time",ylab="d13C",col="darkgray")
 lines(analyticEDir)
 
 #Plotting observed and expected values for the variance CARBON
-binsize = 2000
+binsize = 200
 #analyticSD <- sapply(seq(1,t_term),function(x){sqrt(0.5*cp_sd^2*(f-1)*(exp(2*(f-1)*x)-1))})
 analyticDirSD_c <- sapply(seq(1,t_term),function(x){sqrt(0.5*VarDir_c*(f-1)*(exp(2*(f-1)*x)-1))})
 bins <- seq(binsize+1,t_term,by=binsize)

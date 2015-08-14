@@ -196,7 +196,16 @@ The variance is a little tricker (as always), and is
 	}^M  \bar{x}_c^{(l)} \bar{x}_c^{(k)} \right).
 \end{equation}
 
-\noindent I haven't yet tested the population-level equations, but I'm fairly sure they are right.
+\noindent Finally, we need to calculate the covariance of the mixture distribution across the Carbon and Nitrogen axes.
+The reasoning for needing this covariance is: even though at the individual level, carbon and nitrogen isotope values can be considered independent, this might not be true at the population level.
+For instance, if there are a number of individuals who are consuming prey along the 1:1 axis in the prey mixing space, even though the individual consumer's isotope values are normally distributed, the population level's isotope values may be strongly skewed.
+As such, the covariance in carbon nitrogen space for the population is
+
+\begin{equation}
+{\rm Cov}\{X_{\rm pop}({\rm C, N})\} = {\rm E}\{X_{\rm pop}({\rm C})X_{\rm pop}({\rm N})\} - {\rm E}\{X_{\rm pop}({\rm C})\} {\rm E}\{X_{\rm pop}({\rm N})\}.
+\end{equation}
+
+\noindent Simulation confirms that these equations produce the correct popultion-level statistics for mixtures of normal distributions.
 
 
 \subsection{Injecting more reality} 
@@ -253,6 +262,17 @@ Prey-switching: The above dynamics only apply to specialist consumers. I'm toyin
       The relationship between: x-axis: the incorporation rate $(1-f)$, y-axis: the consumed prey's standard deviation, and z-axis (colors): the standard deviation of the consumer at the asymptotic limit.
       As the incorporation rate increases (such as for fast-turnover tissues), there is greater variance in the consumer for a given variance of consumed prey.
       }
+      \label{fig_time}
+\end{figure*}
+
+
+\begin{figure*}[h!]
+   \centering
+   \includegraphics[width=0.75\textwidth]{fig_pop_isospace.pdf}
+      \caption{
+	Three independent consumer populations that are specializing on different combinations of resources.
+	Using the equations for the long-time limit of the population mean, variance, and covariance, the stippled ellipse displays the expected niche space for the population. Importantly, this ellipse was generated analytically (not from looking backwards at the data).
+	}	
       \label{fig_time}
 \end{figure*}
 
